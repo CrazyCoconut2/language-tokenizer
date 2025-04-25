@@ -1,7 +1,8 @@
-import { LANGUAGE, ParsedElement, ParsedElementType } from "./type";
+import { ParsedElement, ParsedElementType } from "./type";
+import { LANGUAGE_CODE } from 'languages-utils';
 
-export function getRegexForLanguage(language: LANGUAGE) {
-    switch (language) {
+export function getRegexForLanguage(languageCode: LANGUAGE_CODE) {
+    switch (languageCode) {
       case 'en':
         return /^[\w']+$/;
       case 'fr':
@@ -10,7 +11,7 @@ export function getRegexForLanguage(language: LANGUAGE) {
         return /^[\p{L}\p{M}']+$/u;
       case 'it':
         return /^[\p{L}\p{M}']+$/u;
-      case 'pr':
+      case 'pt':
         return /^[\p{L}\p{M}']+$/u;
       case 'po':
         return /^[\p{L}\p{M}']+$/u;
@@ -25,7 +26,7 @@ export function getRegexForLanguage(language: LANGUAGE) {
     return sentence.split(/(<br>|[\[\].,!?\-;:"() ]|(?<=\s)|(?=\s))/g);
   }
   
-  export function parseElementsInDialog(dialog: string, language: LANGUAGE): ParsedElement[] {
+  export function parseElementsInDialog(dialog: string, languageCode: LANGUAGE_CODE): ParsedElement[] {
     const parts = splitTextIntoElements(dialog);
   
     return parts
