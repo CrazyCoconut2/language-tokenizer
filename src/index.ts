@@ -13,7 +13,7 @@ export function getRegexForLanguage(languageCode: LANGUAGE_CODE) {
         return /^[\p{L}\p{M}']+$/u;
       case 'pt':
         return /^[\p{L}\p{M}']+$/u;
-      case 'po':
+      case 'pl':
         return /^[\p{L}\p{M}']+$/u;
       case 'sv':
         return /^[\p{L}\p{M}']+$/u;
@@ -37,7 +37,7 @@ export function getRegexForLanguage(languageCode: LANGUAGE_CODE) {
         }
   
         const elementsWithHyphens = part.split(/(?<=\w)(-)(?=\w)/g);
-        const wordRegex = getRegexForLanguage(language);
+        const wordRegex = getRegexForLanguage(languageCode);
         return elementsWithHyphens.map((subElement: any) => {
           const isWord = wordRegex.test(subElement);
           return {
