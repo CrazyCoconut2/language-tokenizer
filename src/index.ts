@@ -22,7 +22,7 @@ export function getRegexForLanguage(languageCode: LANGUAGE_CODE) {
     }
   }
   
-  export function splitTextIntoElements(sentence: string) {
+  export function splitTextIntoElements(sentence: string): string[] {
     return sentence.split(/(<br>|[\[\].,!?\-;:"() ]|(?<=\s)|(?=\s))/g);
   }
   
@@ -30,15 +30,15 @@ export function getRegexForLanguage(languageCode: LANGUAGE_CODE) {
     const parts = splitTextIntoElements(dialog);
   
     return parts
-      .flatMap((part: any) => {
+      .flatMap((part: string) => {
         if (!part) return [];
         if (part === '<br>' || part === ' ') {
-          return { type: ParsedElementType.WHITESPACE };
+          return [{ type: ParsedElementType.WHITESPACE }];
         }
   
         const elementsWithHyphens = part.split(/(?<=\w)(-)(?=\w)/g);
         const wordRegex = getRegexForLanguage(languageCode);
-        return elementsWithHyphens.map((subElement: any) => {
+        return elementsWithHyphens.map((subElement: string) => {
           const isWord = wordRegex.test(subElement);
           return {
             type: isWord ? ParsedElementType.WORD : ParsedElementType.PUNCTUATION,
@@ -46,6 +46,6 @@ export function getRegexForLanguage(languageCode: LANGUAGE_CODE) {
           };
         });
       })
-      .filter((item: any) => 'text' in item ? item.text !== '' : true);
+      .filter((item: ParsedElement) => 'text' in item ? item.text !== '' : true);
   }
   

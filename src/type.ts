@@ -1,4 +1,4 @@
-export enum ParsedElementType {
+export const enum ParsedElementType {
     WORD = 'WORD',
     PUNCTUATION = 'PUNCTUATION',
     WHITESPACE = 'WHITESPACE',

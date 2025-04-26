@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "postinstall": "npm install language-utils && npm run build"
+    "postinstall": "npm run build"
   },
   "author": "Mohammed Tigrini",
   "license": "ISC",
