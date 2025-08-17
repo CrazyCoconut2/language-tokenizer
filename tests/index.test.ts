@@ -158,10 +158,12 @@ describe('Language Tokenizer', () => {
       it('should parse Spanish sentence with special characters', () => {
         const result = parseElementsInDialog('¡Hola! ¿Cómo estás?', 'es');
         expect(result).toEqual([
-          { type: ParsedElementType.PUNCTUATION, text: '¡Hola' },
+          { type: ParsedElementType.PUNCTUATION, text: '¡' },
+          { type: ParsedElementType.WORD, text: 'Hola' },
           { type: ParsedElementType.PUNCTUATION, text: '!' },
           { type: ParsedElementType.WHITESPACE },
-          { type: ParsedElementType.PUNCTUATION, text: '¿Cómo' },
+          { type: ParsedElementType.PUNCTUATION, text: '¿' },
+          { type: ParsedElementType.WORD, text: 'Cómo' },
           { type: ParsedElementType.WHITESPACE },
           { type: ParsedElementType.WORD, text: 'estás' },
           { type: ParsedElementType.PUNCTUATION, text: '?' }
@@ -301,6 +303,62 @@ describe('Language Tokenizer', () => {
           { type: ParsedElementType.WHITESPACE },
           { type: ParsedElementType.WORD, text: 'fine' },
           { type: ParsedElementType.PUNCTUATION, text: '.' }
+        ]);
+      });
+
+      it('should handle ellipsis correctly', () => {
+        const result = parseElementsInDialog('Hello... world', 'en');
+        expect(result).toEqual([
+          { type: ParsedElementType.WORD, text: 'Hello' },
+          { type: ParsedElementType.PUNCTUATION, text: '...' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.WORD, text: 'world' }
+        ]);
+      });
+
+      it('should handle multiple ellipsis in text', () => {
+        const result = parseElementsInDialog('Hello... world... goodbye', 'en');
+        expect(result).toEqual([
+          { type: ParsedElementType.WORD, text: 'Hello' },
+          { type: ParsedElementType.PUNCTUATION, text: '...' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.WORD, text: 'world' },
+          { type: ParsedElementType.PUNCTUATION, text: '...' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.WORD, text: 'goodbye' }
+        ]);
+      });
+
+      it('should handle Spanish inverted punctuation correctly', () => {
+        const result = parseElementsInDialog('¿Cómo estás? ¡Hola!', 'es');
+        expect(result).toEqual([
+          { type: ParsedElementType.PUNCTUATION, text: '¿' },
+          { type: ParsedElementType.WORD, text: 'Cómo' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.WORD, text: 'estás' },
+          { type: ParsedElementType.PUNCTUATION, text: '?' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.PUNCTUATION, text: '¡' },
+          { type: ParsedElementType.WORD, text: 'Hola' },
+          { type: ParsedElementType.PUNCTUATION, text: '!' }
+        ]);
+      });
+
+      it('should handle mixed ellipsis and Spanish punctuation', () => {
+        const result = parseElementsInDialog('Hello... ¿Cómo estás? ¡Hola!', 'es');
+        expect(result).toEqual([
+          { type: ParsedElementType.WORD, text: 'Hello' },
+          { type: ParsedElementType.PUNCTUATION, text: '...' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.PUNCTUATION, text: '¿' },
+          { type: ParsedElementType.WORD, text: 'Cómo' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.WORD, text: 'estás' },
+          { type: ParsedElementType.PUNCTUATION, text: '?' },
+          { type: ParsedElementType.WHITESPACE },
+          { type: ParsedElementType.PUNCTUATION, text: '¡' },
+          { type: ParsedElementType.WORD, text: 'Hola' },
+          { type: ParsedElementType.PUNCTUATION, text: '!' }
         ]);
       });
     });

@@ -133,10 +133,12 @@ describe('Language Tokenizer Integration Tests', () => {
         const result = parseElementsInDialog(text, 'es');
         
         expect(result).toEqual([
-          { type: ParsedElementType.PUNCTUATION, text: '¡Hola' },
+          { type: ParsedElementType.PUNCTUATION, text: '¡' },
+          { type: ParsedElementType.WORD, text: 'Hola' },
           { type: ParsedElementType.PUNCTUATION, text: '!' },
           { type: ParsedElementType.WHITESPACE },
-          { type: ParsedElementType.PUNCTUATION, text: '¿Cómo' },
+          { type: ParsedElementType.PUNCTUATION, text: '¿' },
+          { type: ParsedElementType.WORD, text: 'Cómo' },
           { type: ParsedElementType.WHITESPACE },
           { type: ParsedElementType.WORD, text: 'estás' },
           { type: ParsedElementType.PUNCTUATION, text: '?' },
@@ -148,7 +150,8 @@ describe('Language Tokenizer Integration Tests', () => {
           { type: ParsedElementType.WORD, text: 'María' },
           { type: ParsedElementType.PUNCTUATION, text: '.' },
           { type: ParsedElementType.WHITESPACE },
-          { type: ParsedElementType.PUNCTUATION, text: '¡Qué' },
+          { type: ParsedElementType.PUNCTUATION, text: '¡' },
+          { type: ParsedElementType.WORD, text: 'Qué' },
           { type: ParsedElementType.WHITESPACE },
           { type: ParsedElementType.WORD, text: 'bonito' },
           { type: ParsedElementType.WHITESPACE },
